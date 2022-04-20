@@ -36,7 +36,7 @@ $(document).ready(function(){
 	
 	haeAsiakkaat();
 	
-	$("#hakunappi").click(function(){		
+	$("#searchbtn").click(function(){		
 		haeAsiakkaat();
 	});
 	$(document.body).on("keydown", function(event){
@@ -44,13 +44,13 @@ $(document).ready(function(){
 			  haeAsiakkaat();
 		  }
 	});
-	$("#hakusana").focus();//focus cursor into search
+	$("#searchwrd").focus();//focus cursor into search
 });	
 	
 	
 function haeAsiakkaat(){
 	$("#list tbody").empty();
-	$.ajax({url:"asiakkaat/"+$("#hakusana").val(), type:"GET", dataType:"json", success:function(result){//Funktio palauttaa tiedot json-objektina		
+	$.ajax({url:"asiakkaat/"+$("#searchwrd").val(), type:"GET", dataType:"json", success:function(result){//Funktio palauttaa tiedot json-objektina		
 		console.log(result);
 		var backg_grey = 1;
 		$.each(result.asiakkaat, function(i, field){  
