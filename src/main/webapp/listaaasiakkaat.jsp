@@ -15,11 +15,14 @@
 </head>
 <body>
 <table id="list">
-	<thead>	
+	<thead>
+		<tr style="background-color:slateblue;">
+			<th colspan="4" class="right"><span id="newcustomer">Lisää uusi asiakas</span></th>
+		</tr>	
 		<tr style="background-color:slateblue;">
 			<th class="allright">Hakusana:</th>
-			<th colspan="2"><input type="text" id="hakusana"></th>
-			<th><input type="button" value="hae" id="hakunappi"></th>
+			<th colspan="2"><input type="text" id="searchwrd"></th>
+			<th><input type="button" value="hae" id="searchbtn"></th>
 		</tr>			
 		<tr style="background-color:slateblue;">
 			<th>Etunimi</th>
@@ -35,6 +38,10 @@
 $(document).ready(function(){
 	
 	haeAsiakkaat();
+	
+	$("#newcustomer").click(function(){
+		document.location="lisaaasiakas.jsp";
+	});
 	
 	$("#searchbtn").click(function(){		
 		haeAsiakkaat();
