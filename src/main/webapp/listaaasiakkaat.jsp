@@ -10,6 +10,21 @@
 .allright{
 	text-align: right;
 }
+.center{
+	text-align: center;
+}
+body {
+  background-color: whitesmoke;
+}
+table {
+	text-align: center;
+	background-color:slateblue
+	
+}
+
+tr {
+	background-color:slateblue;"
+}
 </style>
 
 </head>
@@ -17,18 +32,21 @@
 <table id="list">
 	<thead>
 		<tr style="background-color:slateblue;">
-			<th colspan="4" class="right"><span id="newcustomer">Lisää uusi asiakas</span></th>
+			<th colspan="6" class="center"><a href='lisaaasiakas.jsp'><span style=color:black;font-weight:bold>Lisää uusi asiakas</span></a></th>
+			  
 		</tr>	
 		<tr style="background-color:slateblue;">
-			<th class="allright">Hakusana:</th>
-			<th colspan="2"><input type="text" id="searchwrd"></th>
+			<th style=text-align:right>Hakusana:</th>
+			<th style=text-align:right colspan="3"><input type="text" id="searchwrd"></th>
 			<th><input type="button" value="hae" id="searchbtn"></th>
 		</tr>			
-		<tr style="background-color:slateblue;">
-			<th>Etunimi</th>
-			<th>Sukunimi</th>
-			<th>Puhelin</th>
-			<th>S-posti</th>							
+		<tr>
+			<th> Asiakas nro. </th>
+			<th> Etunimi </th>
+			<th> Sukunimi </th>
+			<th> Puhelin </th>
+			<th> S-posti </th>
+			<th></th>							
 		</tr>
 	</thead>
 	<tbody>
@@ -64,22 +82,37 @@ function haeAsiakkaat(){
         	var htmlStr;
         	console.log(i);
         	if (backg_grey == 1) {
-        		htmlStr+="<tr style= background-color:grey;>";
+        		htmlStr+="<tr style= background-color:grey id='line_"+field.asiakasnro+"';>";
         		backg_grey = 0;
         	} else {
-        		htmlStr+="<tr style= background-color:lightgrey;>";
+        		htmlStr+="<tr style= background-color:lightgrey;   id='line_"+field.asiakasnro+"';>";
         		backg_grey = 1;
         	}
+        	//htmlStr+="<tr id='line_"+field.asiakasnro+"'>";
+        	htmlStr+="<td><span style=text-align:center;>"+field.asiakasnro+"</span></td>";
         	htmlStr+="<td>"+field.etunimi+"</td>";
         	htmlStr+="<td>"+field.sukunimi+"</td>";
         	htmlStr+="<td>"+field.puhelin+"</td>";
-        	htmlStr+="<td>"+field.sposti+"</td>";  
+        	htmlStr+="<td>"+field.sposti+"</td>";
+        	htmlStr+="<td><span style=color:tomato;font-weight:bold class='poista' onclick=poista('"+field.asiakasnro+"') >Poista</span></td>";
         	htmlStr+="</tr>";
         	$("#list tbody").append(htmlStr);
         });	
     }});
 }
-
+function poista(asiakasnro){
+	if(confirm("Poista asiakas " + asiakasnro +"?")){
+		$.ajax({url:"asiakkaat/"+asiakasnro, type:"DELETE", dataType:"json", success:function(result) { //result on joko {"response:1"} tai {"response:0"}
+	        if(result.response==0){
+	        	$("#ilmo").html("Asiakkaan poisto ep�onnistui.");
+	        }else if(result.response==1){
+	        	$("#line_"+asiakasnro).css("background-color", "red"); //V�rj�t��n poistetun asiakkaan rivi
+	        	alert("Asiakkaan " + asiakasnro +" poisto onnistui.");
+				haeAsiakkaat();        	
+			}
+	    }});
+	}
+}
 
 </script>
 </body>

@@ -14,8 +14,8 @@
 <form id="addcustomer">
 	<table>
 		<thead>	
-			<tr style="background-color:slateblue;">
-				<th colspan="5" class="right"><span id="back">Takaisin listaukseen</span></th>
+			<tr style="background-color:slateblue;">	
+				<th colspan="5" class="center"><a href='listaaasiakkaat.jsp'><span style=color:black;font-weight:bold>Takaisin listaukseen</span></a></th>
 			</tr>		
 			<tr style="background-color:slateblue;">
 				<th>Etunimi</th>
@@ -47,37 +47,49 @@ $(document).ready(function(){
 		rules: {
 			etun:  {
 				required: true,
-				minlength: 2				
+				minlength: 2,
+				
+				
 			},	
 			sukun:  {
 				required: true,
-				minlength: 2				
+				minlength: 2,
+				
+				
 			},
 			puh:  {
 				required: true,
-				minlength: 6
+				minlength: 6,
+				number: true
+				
 			},	
 			sposti:  {
 				required: true,
 				minlength: 6,
+				email: true
 			}	
 		},
+		
 		messages: {
 			etun: {     
 				required: "Kenttä on tyhjä",
-				minlength: "Liian lyhyt"			
+				minlength: "Liian lyhyt",
+				
 			},
 			sukun: {
 				required: "Kenttä on tyhjä",
-				minlength: "Liian lyhyt"
+				minlength: "Liian lyhyt",
+				
 			},
 			puh: {
 				required: "Kenttä on tyhjä",
-				minlength: "Liian lyhyt"
+				minlength: "Liian lyhyt",
+				number: "Numero ei ole kelvollinen"
 			},
 			sposti: {
 				required: "Kenttä on tyhjä",
 				minlength: "Liian lyhyt",
+				email: "Sähköposti ei ole kelvollisessa muodossa"
 				
 			}
 		},			
@@ -86,18 +98,22 @@ $(document).ready(function(){
 		}		
 	}); 	
 });
-//funktio tietojen lis��mist� varten. Kutsutaan backin POST-metodia ja v�litet��n kutsun mukana uudet tiedot json-stringin�.
-//POST /autot/
+//tällä funktiolla lisätään tietoja. tässä kutsutaan Asiakkaat POST-metodia -> kutsun mukana lähetetään uudet tiedot json-stringin�.
 function addInformation(){	
-	var formJsonStr = formDataJsonStr($("#addcustomer").serializeArray()); //muutetaan lomakkeen tiedot json-stringiksi
+	var formJsonStr = formDataJsonStr($("#addcustomer").serializeArray()); //serialisoidaan lomakkeen tiedot json-stringiksi
 	$.ajax({url:"asiakkaat/", data:formJsonStr, type:"POST", dataType:"json", success:function(result) { //result on joko {"response:1"} tai {"response:0"}       
 		if(result.response==0){
-		console.log("Fail")
+		console.log("Add fail")
       	$("#info").html("Asiakkaan lisääminen epäonnistui.");
       }else if(result.response==1){
-  		console.log("Success")
-      	$("#info").html("Asiakkaan lisääminen onnistui");
-      	$("#etun", "#sukun", "#puh", "#sposti").val("");
+  		console.log("Add success")
+  		$("#info").html("Asiakkaan lisääminen onnistui");
+  		$(etun).val('');
+  		$(sukun).val('');
+  		$(puh).val('');
+  		$(sposti).val('');
+      	
+      	
 		}
   }});	
 }
