@@ -88,13 +88,13 @@ function haeAsiakkaat(){
         		htmlStr+="<tr style= background-color:lightgrey;   id='line_"+field.asiakasnro+"';>";
         		backg_grey = 1;
         	}
-        	//htmlStr+="<tr id='line_"+field.asiakasnro+"'>";
         	htmlStr+="<td><span style=text-align:center;>"+field.asiakasnro+"</span></td>";
         	htmlStr+="<td>"+field.etunimi+"</td>";
         	htmlStr+="<td>"+field.sukunimi+"</td>";
         	htmlStr+="<td>"+field.puhelin+"</td>";
         	htmlStr+="<td>"+field.sposti+"</td>";
-        	htmlStr+="<td><span style=color:tomato;font-weight:bold class='poista' onclick=poista('"+field.asiakasnro+"') >Poista</span></td>";
+        	//htmlStr+="<td><span style=color:tomato;font-weight:bold class='poista' onclick=poista('"+field.asiakasnro+"') >Poista</span></td>"; -> luo oman sarakkeen
+        	htmlStr+="<td><input style=color:tomato;font-weight:bold type=button value=Poista id=deletebtn onclick=poista('"+field.asiakasnro+"')></td>"; //-> luodaan nappi poistolle 
         	htmlStr+="</tr>";
         	$("#list tbody").append(htmlStr);
         });	
@@ -104,9 +104,9 @@ function poista(asiakasnro){
 	if(confirm("Poista asiakas " + asiakasnro +"?")){
 		$.ajax({url:"asiakkaat/"+asiakasnro, type:"DELETE", dataType:"json", success:function(result) { //result on joko {"response:1"} tai {"response:0"}
 	        if(result.response==0){
-	        	$("#ilmo").html("Asiakkaan poisto ep�onnistui.");
+	        	$("#ilmo").html("Asiakkaan poisto epäonnistui.");
 	        }else if(result.response==1){
-	        	$("#line_"+asiakasnro).css("background-color", "red"); //V�rj�t��n poistetun asiakkaan rivi
+	        	$("#line_"+asiakasnro).css("background-color", "red"); //color red for deleted line
 	        	alert("Asiakkaan " + asiakasnro +" poisto onnistui.");
 				haeAsiakkaat();        	
 			}

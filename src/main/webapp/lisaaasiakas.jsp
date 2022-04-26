@@ -9,6 +9,26 @@
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/main.css">
 <title>Lisää asiakas</title>
+<style>
+.allright{
+	text-align: right;
+}
+.center{
+	text-align: center;
+}
+body {
+  background-color: whitesmoke;
+}
+table {
+	text-align: center;
+	background-color:slateblue
+	
+}
+
+tr {
+	background-color:slateblue;"
+}
+</style>
 </head>
 <body>
 <form id="addcustomer">
