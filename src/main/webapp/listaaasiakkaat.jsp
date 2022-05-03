@@ -10,6 +10,9 @@
 .allright{
 	text-align: right;
 }
+.allleft{
+	text-align: left;
+}
 .center{
 	text-align: center;
 }
@@ -32,7 +35,7 @@ tr {
 <table id="list">
 	<thead>
 		<tr style="background-color:slateblue;">
-			<th colspan="6" class="center"><a href='lisaaasiakas.jsp'><span style=color:black;font-weight:bold>Lisää uusi asiakas</span></a></th>
+			<th colspan="5" class="center"><a href='lisaaasiakas.jsp'><span style=color:black;font-weight:bold>Lisää uusi asiakas</span></a></th>
 			  
 		</tr>	
 		<tr style="background-color:slateblue;">
@@ -56,6 +59,10 @@ tr {
 $(document).ready(function(){
 	
 	haeAsiakkaat();
+	
+	$("#changebtn").click(function(){
+		document.location="muutaasiakas.jsp?asiakasnro="+field.asiakasnro+"";
+	});
 	
 	$("#newcustomer").click(function(){
 		document.location="lisaaasiakas.jsp";
@@ -93,13 +100,19 @@ function haeAsiakkaat(){
         	htmlStr+="<td>"+field.sukunimi+"</td>";
         	htmlStr+="<td>"+field.puhelin+"</td>";
         	htmlStr+="<td>"+field.sposti+"</td>";
-        	//htmlStr+="<td><span style=color:tomato;font-weight:bold class='poista' onclick=poista('"+field.asiakasnro+"') >Poista</span></td>"; -> luo oman sarakkeen
-        	htmlStr+="<td><input style=color:tomato;font-weight:bold type=button value=Poista id=deletebtn onclick=poista('"+field.asiakasnro+"')></td>"; //-> luodaan nappi poistolle 
+        	//htmlStr+="<td><a href='muutaasiakas.jsp?asiakasnro="+field.asiakasnro+"'>Muuta</a>&nbsp;";
+        	htmlStr+="<td><input style=color:black type=button value=Muuta id=changebtn onclick=muuta('"+field.asiakasnro+"')></a>&nbsp;";
+        	htmlStr+="<input style=color:tomato;font-weight:bold type=button value=Poista id=deletebtn onclick=poista('"+field.asiakasnro+"')></td>"; //-> luodaan nappi poistolle 
         	htmlStr+="</tr>";
         	$("#list tbody").append(htmlStr);
         });	
     }});
 }
+
+function muuta(asiakasnro){
+	document.location="muutaasiakas.jsp?asiakasnro="+asiakasnro+"";
+}
+
 function poista(asiakasnro){
 	if(confirm("Poista asiakas " + asiakasnro +"?")){
 		$.ajax({url:"asiakkaat/"+asiakasnro, type:"DELETE", dataType:"json", success:function(result) { //result on joko {"response:1"} tai {"response:0"}
