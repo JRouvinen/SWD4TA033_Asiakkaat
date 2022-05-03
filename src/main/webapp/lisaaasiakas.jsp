@@ -52,9 +52,11 @@ tr {
 				<td><input type="text" name="puh" id="puh"></td>
 				<td><input type="text" name="sposti" id="sposti"></td> 
 				<td><input type="submit" id="save" value="Lisää asiakas"></td>
+				
 			</tr>
 		</tbody>
-	</table>
+	</table> 
+	<input type="hidden" name="asiakasid" id="asiakasid">   
 </form>
 <span id="info"></span>
 </body>
